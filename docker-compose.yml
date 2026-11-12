@@ -1,0 +1,31 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: wagering
+      POSTGRES_PASSWORD: wagering
+      POSTGRES_DB: wagering
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U wagering -d wagering"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
+  localstack:
+    image: localstack/localstack:3.8
+    environment:
+      SERVICES: sqs
+      AWS_DEFAULT_REGION: us-east-1
+    ports:
+      - "4566:4566"
+    volumes:
+      # Script executado quando o LocalStack fica pronto: cria as filas.
+      - ./docker/localstack-init.sh:/etc/localstack/init/ready.d/init.sh:ro
+    healthcheck:
+      # Só fica "healthy" depois que as filas existem.
+      test: ["CMD-SHELL", "awslocal sqs get-queue-url --queue-name wager-transactions.fifo"]
+      interval: 2s
+      timeout: 5s
+      retries: 60
