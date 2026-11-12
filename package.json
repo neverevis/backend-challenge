@@ -12,7 +12,9 @@
     "test:integration": "bun test test/integration",
     "test:concurrency": "bun test test/concurrency",
     "infra:up": "docker compose up -d --wait postgres localstack",
-    "infra:down": "docker compose down -v"
+    "infra:down": "docker compose down -v",
+    "db:migrate": "bun run src/infrastructure/database/migrate.ts up",
+    "db:rollback": "bun run src/infrastructure/database/migrate.ts down"
   },
   "dependencies": {
     "@aws-sdk/client-sqs": "^3.1167.0",
@@ -29,6 +31,7 @@
   },
   "devDependencies": {
     "@types/bun": "^1.4.4",
+    "@types/express": "^5",
     "@types/node": "^26.6.6",
     "typescript": "^5.9"
   }

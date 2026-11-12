@@ -27,3 +27,30 @@ export class CurrencyMismatchError extends DomainError {
     super(`Currency mismatch: expected ${expected}, received ${received}`);
   }
 }
+
+/** Dados de uma transação violam a forma exigida (ex.: REFUND sem referência). */
+export class InvalidWagerTransactionError extends DomainError {
+  readonly code = "INVALID_WAGER_TRANSACTION";
+}
+
+/** Débito que deixaria o saldo negativo. */
+export class InsufficientFundsError extends DomainError {
+  readonly code = "INSUFFICIENT_FUNDS";
+}
+
+/** Lançamento cuja aritmética não fecha: balanceBefore ± money !== balanceAfter. */
+export class UnbalancedLedgerEntryError extends DomainError {
+  readonly code = "UNBALANCED_LEDGER_ENTRY";
+}
+
+export class InvalidWalletError extends DomainError {
+  readonly code = "INVALID_WALLET";
+}
+
+/**
+ * Tentativa de transição a partir de um estado terminal.
+ * É erro de programação, não caminho de negócio (README 6.3).
+ */
+export class InvalidTransactionStateError extends DomainError {
+  readonly code = "INVALID_TRANSACTION_STATE";
+}

@@ -7,6 +7,9 @@ export const config = {
     user: process.env.DB_USER ?? "wagering",
     password: process.env.DB_PASSWORD ?? "wagering",
     name: process.env.DB_NAME ?? "wagering",
+    poolMax: Number(process.env.DB_POOL_MAX ?? 20),
+    /** Quanto tempo esperar pelo lock de uma wallet antes de devolver erro transitório. */
+    lockTimeoutMs: Number(process.env.DB_LOCK_TIMEOUT_MS ?? 5000),
   },
   sqs: {
     endpoint: process.env.SQS_ENDPOINT ?? "http://localhost:4566",

@@ -16,6 +16,7 @@
     "emitDecoratorMetadata": true,
 
     "esModuleInterop": true,
+    "verbatimModuleSyntax": true,
     "skipLibCheck": true,
     "noEmit": true
   },
